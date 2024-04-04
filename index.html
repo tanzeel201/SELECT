@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country, State, City Dropdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80rem;
+            display: flex;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            margin-left: 2rem;
+        }
+
+        select {
+            width: 20rem;
+            padding: 0.5rem;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+        }
+
+        option {
+            padding: 5px;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 14L3 7h14z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px top 50%;
+            background-size: 18px auto;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="country">Country:</label>
+        <select id="country">
+            <option value="">Select Country</option>
+        </select>
+
+        <label for="state">State:</label>
+        <select id="state">
+            <option value="">Select State</option>
+        </select>
+
+        <label for="city">City:</label>
+        <select id="city">
+            <option value="">Select City</option>
+        </select>
+    </form>
+
+    <script>
+        var countries = ["USA", "Canada", "UK"];
+        var states = {
+            "USA": ["New York", "California", "Texas"],
+            "Canada": ["Ontario", "Quebec", "British Columbia"],
+            "UK": ["England", "Scotland", "Wales"]
+        };
+        var cities = {
+            "New York": ["New York City", "Buffalo", "Rochester"],
+            "California": ["Los Angeles", "San Francisco", "San Diego"],
+            "Texas": ["Houston", "Dallas", "Austin"],
+            "Ontario": ["Toronto", "Ottawa", "Mississauga"],
+            "Quebec": ["Montreal", "Quebec City", "Laval"],
+            "British Columbia": ["Vancouver", "Victoria", "Kelowna"],
+            "England": ["London", "Manchester", "Birmingham"],
+            "Scotland": ["Glasgow", "Edinburgh", "Aberdeen"],
+            "Wales": ["Cardiff", "Swansea", "Newport"]
+        };
+
+        function populateCountries() {
+            var countryDropdown = document.getElementById("country");
+            for (var i = 0; i < countries.length; i++) {
+                var option = document.createElement("option");
+                option.text = countries[i];
+                countryDropdown.add(option);
+            }
+        }
+
+        function populateStates(selectedCountry) {
+            var stateDropdown = document.getElementById("state");
+            stateDropdown.innerHTML = "<option value=''>Select State</option>"; 
+            var statesForCountry = states[selectedCountry];
+            for (var i = 0; i < statesForCountry.length; i++) {
+                var option = document.createElement("option");
+                option.text = statesForCountry[i];
+                stateDropdown.add(option);
+            }
+        }
+
+        function populateCities(selectedState) {
+            var cityDropdown = document.getElementById("city");
+            cityDropdown.innerHTML = "<option value=''>Select City</option>"; 
+            var citiesForState = cities[selectedState];
+            for (var i = 0; i < citiesForState.length; i++) {
+                var option = document.createElement("option");
+                option.text = citiesForState[i];
+                cityDropdown.add(option);
+            }
+        }
+
+        document.getElementById("country").addEventListener("change", function() {
+            var selectedCountry = this.value;
+            populateStates(selectedCountry);
+        });
+
+        document.getElementById("state").addEventListener("change", function() {
+            var selectedState = this.value;
+            populateCities(selectedState);
+        });
+
+        populateCountries();
+    </script>
+</body>
+</html>
